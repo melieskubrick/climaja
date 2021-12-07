@@ -29,6 +29,8 @@ const TemperatureCard = ({
         return require('#/assets/images/partlyCloudy.png');
       case 'mist':
         return require('#/assets/images/snowy.png');
+      case 'haze':
+        return require('#/assets/images/snowy.png');
       case 'clear sky':
         return require('#/assets/images/sunny.png');
       case 'rain and drizzle':

@@ -1,5 +1,5 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
-import {ActivityIndicator, Alert} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 
 import {Container, NavButton} from './styles';
 
@@ -9,7 +9,7 @@ import TemperatureCard from '#/components/TemperatureCard';
 import Error from '#/components/Error';
 
 import {getLocationByLatLng} from '#/services/locationApi';
-import {getCurrentClimate} from '#/services/api';
+import {getCurrentClimate} from '#/services/climate';
 
 import {format} from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
