@@ -9,7 +9,7 @@ import TemperatureCard from '#/components/TemperatureCard';
 import Error from '#/components/Error';
 
 import {getLocationByLatLng} from '#/services/locationApi';
-import {getCurrentClimate} from '#/services/climate';
+import {getCurrentClimate, getCurrentClimates} from '#/services/climate';
 
 import {format} from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
@@ -20,8 +20,9 @@ const Climate: React.FC = ({navigation, route}: any) => {
   const [city, setCity] = useState<string>('');
   const [state, setState] = useState<string>('');
   const [climate, setClimate] = useState<Climate>();
+  const [climates, setClimates] = useState<Climates>();
 
-  const locationLatLon = async () => {
+  const locationLatLonClimate = async () => {
     setClimate(undefined);
     if (!lat || !lon) {
       return;
@@ -37,8 +38,30 @@ const Climate: React.FC = ({navigation, route}: any) => {
     setClimate(currentClimate.data);
   };
 
+  const locationLatLonClimates = async () => {
+    setClimates(undefined);
+    if (!lat || !lon) {
+      return;
+    }
+
+    const {data} = await getLocationByLatLng(lat, lon);
+    const firstLocation = data.results.shift().locations.shift();
+
+    setState(firstLocation.adminArea3);
+    setCity(firstLocation.adminArea5);
+
+    const currentClimate = await getCurrentClimates(lat, lon);
+    setClimates(currentClimate.data);
+  };
+
+  const getClimates = () => {
+    locationLatLonClimate();
+    locationLatLonClimates();
+  };
+
   useEffect(() => {
-    locationLatLon();
+    locationLatLonClimate();
+    locationLatLonClimates();
   }, [lat, lon]);
 
   useLayoutEffect(() => {
@@ -49,7 +72,7 @@ const Climate: React.FC = ({navigation, route}: any) => {
         </NavButton>
       ),
       headerRight: () => (
-        <NavButton onPress={() => locationLatLon()}>
+        <NavButton onPress={() => getClimates()}>
           <Feather name="refresh-ccw" size={24} color="white" />
         </NavButton>
       ),
@@ -63,20 +86,18 @@ const Climate: React.FC = ({navigation, route}: any) => {
       ) : climate ? (
         <>
           <TemperatureCard
-            min={`${Math.trunc(climate.daily[0].temp.min)}°C`}
-            max={`${Math.trunc(climate.daily[0].temp.max)}°C`}
+            min={`${Math.trunc(climate.main.temp_min)}°C`}
+            max={`${Math.trunc(climate.main.temp_max)}°C`}
             date={format(Date.now(), 'dd, MMM yy', {locale: pt})}
-            temperature={
-              `${Math.trunc(climate.current.temp)}°C` || 'Carregando'
-            }
+            temperature={`${Math.trunc(climate.main.temp)}°C` || 'Carregando'}
             currentCity={city}
             currentState={state}
-            cloud={climate.current.weather[0].description}
-            wind={`${climate.current.wind_speed}` || 'Carregando'}
-            humidity={`${climate.current.humidity}%` || 'Carregando'}
+            cloud={climate.weather[0].description}
+            wind={`${climate.wind.speed}` || 'Carregando'}
+            humidity={`${climate.main.humidity}%` || 'Carregando'}
           />
-          {climate.daily ? (
-            climate.daily.map(
+          {climates?.daily &&
+            climates.daily.map(
               (day, index) =>
                 index > 0 && (
                   <InformationCard
@@ -91,10 +112,7 @@ const Climate: React.FC = ({navigation, route}: any) => {
                     iconName="calendar"
                   />
                 ),
-            )
-          ) : (
-            <></>
-          )}
+            )}
         </>
       ) : (
         <ActivityIndicator size="large" color="white" animating />
