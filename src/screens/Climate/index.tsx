@@ -63,15 +63,15 @@ const Climate: React.FC = ({navigation, route}: any) => {
       ) : climate ? (
         <>
           <TemperatureCard
-            minMax={
-              `${climate?.main.temp_min}°C - ${climate?.main.temp_max}°C` ||
-              'Carregando'
-            }
-            day="Hoje"
+            min={`${climate.main.temp_min}°C`}
+            max={`${climate.main.temp_max}°C`}
             date={format(Date.now(), 'dd, MMM yy', {locale: pt})}
             temperature={`${climate.main.temp}°C` || 'Carregando'}
-            currentLocation={`${city}-${state}`}
+            currentCity={city}
+            currentState={state}
             cloud={climate.weather[0].description}
+            wind={`${climate.wind.speed}` || 'Carregando'}
+            humidity={`${climate.main.humidity}%` || 'Carregando'}
           />
           <InformationCard
             primaryText="Descrição"

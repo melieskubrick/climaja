@@ -1,25 +1,33 @@
 import React from 'react';
+
+import {Container, Row, Temperature, Vw, Cloud} from './styles';
+
 import PrimaryText from '../PrimaryText';
 import SecondaryText from '../SecondaryText';
-
-import {Container, Row, Temperature, MinMax, Vw, Cloud} from './styles';
+import Info from './Info';
 
 interface MainCardProps {
-  day: string;
   date: string;
   temperature: string;
-  minMax: string;
-  currentLocation: string;
+  currentCity: string;
+  currentState: string;
   cloud: string;
+  min: string;
+  max: string;
+  wind: string
+  humidity: string
 }
 
 const TemperatureCard = ({
-  day,
   date,
   temperature,
-  minMax,
-  currentLocation,
+  currentCity,
+  currentState,
   cloud,
+  min,
+  max,
+  wind,
+  humidity
 }: MainCardProps) => {
   const currentCloud = () => {
     switch (cloud) {
@@ -45,17 +53,24 @@ const TemperatureCard = ({
   return (
     <Container>
       <Row>
-        <PrimaryText>{day}</PrimaryText>
+        <PrimaryText>{currentCity}</PrimaryText>
         <SecondaryText>{date}</SecondaryText>
       </Row>
+      <SecondaryText>{currentState}</SecondaryText>
       <Row>
         <Vw>
           <Temperature>{temperature}</Temperature>
-          <MinMax>{minMax}</MinMax>
         </Vw>
         <Cloud source={currentCloud()} />
       </Row>
-      <SecondaryText>{currentLocation}</SecondaryText>
+      <Row>
+        <Info infoTitle="Temp. min" infoDescription={min} iconName="thermometer" />
+        <Info infoTitle="Temp. max" infoDescription={max} iconName="thermometer" />
+      </Row>
+      <Row>
+        <Info infoTitle="Vento" infoDescription={wind} iconName="wind" />
+        <Info infoTitle="Umidade" infoDescription={humidity} iconName="droplet" />
+      </Row>
     </Container>
   );
 };

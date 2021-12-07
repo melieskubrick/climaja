@@ -23,10 +23,4 @@ export const Temperature = styled.Text`
   font-family: ${theme.typography.bold};
 `;
 
-export const MinMax = styled.Text`
-  font-size: 16px;
-  color: white;
-  font-family: ${theme.typography.light};
-`;
-
 export const Cloud = styled.Image``
