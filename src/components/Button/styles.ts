@@ -36,6 +36,7 @@ export const TextButton = styled.Text<{ inverted: boolean; color: string; disabl
   position: absolute;
   text-align: center;
   align-self: center;
+  font-family: ${({ theme }) => theme.typography.medium};
   width: 100%;
   left: 16px;
 `;
