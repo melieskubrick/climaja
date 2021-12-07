@@ -6,7 +6,7 @@ import React from 'react';
 
 import {Container, Logo, Texts} from './styles';
 
-const Welcome: React.FC = () => {
+const Welcome: React.FC = ({navigation}: any) => {
   return (
     <Container>
       <Logo source={require('#/assets/images/partlyCloudy.png')} />
@@ -16,7 +16,7 @@ const Welcome: React.FC = () => {
           Descubra o clima da sua região agora! Permita sua localização abaixo
         </SecondaryText>
       </Texts>
-      <Button textButton='Permitir localização' color={theme.colors.yellow}></Button>
+      <Button onPress={() => navigation.navigate('Climate')} textButton='Permitir localização' color={theme.colors.yellow}></Button>
     </Container>
   );
 };

@@ -32,7 +32,7 @@ export default function AppRoutes() {
   };
 
   return (
-    <Stack.Navigator initialRouteName="Climate">
+    <Stack.Navigator initialRouteName="Welcome">
       <Stack.Screen
         name="Welcome"
         component={Welcome}
