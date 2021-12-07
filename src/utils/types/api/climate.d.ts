@@ -86,7 +86,7 @@ interface Climates {
       sunset: number;
       temp: [Object];
       uvi: number;
-      weather: [Array];
+      weather: [];
       wind_deg: number;
       wind_gust: number;
       wind_speed: number;
@@ -107,7 +107,7 @@ interface Climates {
       sunset: number;
       temp: [Object];
       uvi: number;
-      weather: [Array];
+      weather: [];
       wind_deg: number;
       wind_gust: number;
       wind_speed: number;
@@ -127,7 +127,7 @@ interface Climates {
       sunset: number;
       temp: [Object];
       uvi: number;
-      weather: [Array];
+      weather: [];
       wind_deg: number;
       wind_gust: number;
       wind_speed: number;
@@ -147,28 +147,7 @@ interface Climates {
       sunset: number;
       temp: [Object];
       uvi: number;
-      weather: [Array];
-      wind_deg: number;
-      wind_gust: number;
-      wind_speed: number;
-    },
-    {
-      clouds: number;
-      dew_point: number;
-      dt: number;
-      feels_like: [Object];
-      humidity: number;
-      moon_phase: number;
-      moonrise: number;
-      moonset: number;
-      pop: number;
-      pressure: number;
-      rain: number;
-      sunrise: number;
-      sunset: number;
-      temp: [Object];
-      uvi: number;
-      weather: [Array];
+      weather: [];
       wind_deg: number;
       wind_gust: number;
       wind_speed: number;
@@ -189,7 +168,7 @@ interface Climates {
       sunset: number;
       temp: [Object];
       uvi: number;
-      weather: [Array];
+      weather: Array;
       wind_deg: number;
       wind_gust: number;
       wind_speed: number;
@@ -210,7 +189,28 @@ interface Climates {
       sunset: number;
       temp: [Object];
       uvi: number;
-      weather: [Array];
+      weather: [];
+      wind_deg: number;
+      wind_gust: number;
+      wind_speed: number;
+    },
+    {
+      clouds: number;
+      dew_point: number;
+      dt: number;
+      feels_like: [Object];
+      humidity: number;
+      moon_phase: number;
+      moonrise: number;
+      moonset: number;
+      pop: number;
+      pressure: number;
+      rain: number;
+      sunrise: number;
+      sunset: number;
+      temp: [Object];
+      uvi: number;
+      weather: [];
       wind_deg: number;
       wind_gust: number;
       wind_speed: number;

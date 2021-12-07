@@ -60,8 +60,7 @@ const Climate: React.FC = ({navigation, route}: any) => {
   };
 
   useEffect(() => {
-    locationLatLonClimate();
-    locationLatLonClimates();
+    getClimates();
   }, [lat, lon]);
 
   useLayoutEffect(() => {
@@ -83,7 +82,7 @@ const Climate: React.FC = ({navigation, route}: any) => {
     <Container contentContainerStyle={{paddingTop: 8, paddingBottom: 16}}>
       {!lat || !lon ? (
         <Error />
-      ) : climate ? (
+      ) : climate && climates?.daily ? (
         <>
           <TemperatureCard
             min={`${Math.trunc(climate.main.temp_min)}°C`}
@@ -96,23 +95,22 @@ const Climate: React.FC = ({navigation, route}: any) => {
             wind={`${climate.wind.speed}` || 'Carregando'}
             humidity={`${climate.main.humidity}%` || 'Carregando'}
           />
-          {climates?.daily &&
-            climates.daily.map(
-              (day, index) =>
-                index > 0 && (
-                  <InformationCard
-                    key={day.dt}
-                    primaryText={
-                      format(day.dt * 1000, 'dd, MMMM, yyyy', {locale: pt}) ||
-                      'Carregando'
-                    }
-                    secondaryText={
-                      `${Math.trunc(day.temp.day)}°C` || 'Carregando'
-                    }
-                    iconName="calendar"
-                  />
-                ),
-            )}
+          {climates.daily.map(
+            (day, index) =>
+              index > 0 && (
+                <InformationCard
+                  key={day.dt}
+                  primaryText={
+                    format(day.dt * 1000, 'dd, MMMM, yyyy', {locale: pt}) ||
+                    'Carregando'
+                  }
+                  secondaryText={
+                    `${Math.trunc(day.temp.day)}°C` || 'Carregando'
+                  }
+                  iconName="calendar"
+                />
+              ),
+          )}
         </>
       ) : (
         <ActivityIndicator size="large" color="white" animating />
