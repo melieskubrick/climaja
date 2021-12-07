@@ -9,10 +9,36 @@ interface MainCardProps {
   date: string;
   temperature: string;
   minMax: string;
-  currentLocation: string
+  currentLocation: string;
+  cloud: string;
 }
 
-const TemperatureCard = ({day, date, temperature, minMax, currentLocation}: MainCardProps) => {
+const TemperatureCard = ({
+  day,
+  date,
+  temperature,
+  minMax,
+  currentLocation,
+  cloud,
+}: MainCardProps) => {
+  const currentCloud = () => {
+    switch (cloud) {
+      case 'broken clouds':
+        return require('#/assets/images/partlyCloudy.png');
+      case 'scattered clouds':
+        return require('#/assets/images/partlyCloudy.png');
+      case 'mist':
+        return require('#/assets/images/snowy.png');
+      case 'clear sky':
+        return require('#/assets/images/sunny.png');
+      case 'rain and drizzle':
+        return require('#/assets/images/rainThunder.png');
+      case 'light intensity drizzle':
+        return require('#/assets/images/rainy.png');
+      default:
+        break;
+    }
+  };
 
   return (
     <Container>
@@ -25,7 +51,7 @@ const TemperatureCard = ({day, date, temperature, minMax, currentLocation}: Main
           <Temperature>{temperature}</Temperature>
           <MinMax>{minMax}</MinMax>
         </Vw>
-        <Cloud source={require('#/assets/images/partlyCloudy.png')} />
+        <Cloud source={currentCloud()} />
       </Row>
       <SecondaryText>{currentLocation}</SecondaryText>
     </Container>

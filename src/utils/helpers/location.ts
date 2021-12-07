@@ -4,7 +4,7 @@ import Geolocation from 'react-native-geolocation-service';
 const hasPermissionIOS = async () => {
   const openSetting = () => {
     Linking.openSettings().catch(() => {
-      Alert.alert('Unable to open settings');
+      Alert.alert('Não foi possível abrir as configurações');
     });
   };
 
