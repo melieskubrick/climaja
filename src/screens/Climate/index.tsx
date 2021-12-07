@@ -63,10 +63,12 @@ const Climate: React.FC = ({navigation, route}: any) => {
       ) : climate ? (
         <>
           <TemperatureCard
-            min={`${climate.daily[0].temp.min}°C`}
-            max={`${climate.daily[0].temp.max}°C`}
+            min={`${Math.trunc(climate.daily[0].temp.min)}°C`}
+            max={`${Math.trunc(climate.daily[0].temp.max)}°C`}
             date={format(Date.now(), 'dd, MMM yy', {locale: pt})}
-            temperature={`${climate.current.temp}°C` || 'Carregando'}
+            temperature={
+              `${Math.trunc(climate.current.temp)}°C` || 'Carregando'
+            }
             currentCity={city}
             currentState={state}
             cloud={climate.current.weather[0].description}
@@ -83,7 +85,9 @@ const Climate: React.FC = ({navigation, route}: any) => {
                       format(day.dt * 1000, 'dd, MMMM, yyyy', {locale: pt}) ||
                       'Carregando'
                     }
-                    secondaryText={`${day.temp.day}°C` || 'Carregando'}
+                    secondaryText={
+                      `${Math.trunc(day.temp.day)}°C` || 'Carregando'
+                    }
                     iconName="calendar"
                   />
                 ),

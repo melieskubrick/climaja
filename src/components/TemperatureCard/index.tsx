@@ -14,8 +14,8 @@ interface MainCardProps {
   cloud: string;
   min: string;
   max: string;
-  wind: string
-  humidity: string
+  wind: string;
+  humidity: string;
 }
 
 const TemperatureCard = ({
@@ -27,13 +27,15 @@ const TemperatureCard = ({
   min,
   max,
   wind,
-  humidity
+  humidity,
 }: MainCardProps) => {
   const currentCloud = () => {
     switch (cloud) {
       case 'broken clouds':
         return require('#/assets/images/partlyCloudy.png');
       case 'scattered clouds':
+        return require('#/assets/images/partlyCloudy.png');
+      case 'few clouds':
         return require('#/assets/images/partlyCloudy.png');
       case 'mist':
         return require('#/assets/images/snowy.png');
@@ -44,6 +46,8 @@ const TemperatureCard = ({
       case 'rain and drizzle':
         return require('#/assets/images/rainThunder.png');
       case 'light intensity drizzle':
+        return require('#/assets/images/rainy.png');
+      case 'light rain':
         return require('#/assets/images/rainy.png');
       default:
         break;
@@ -64,12 +68,24 @@ const TemperatureCard = ({
         <Cloud source={currentCloud()} />
       </Row>
       <Row>
-        <Info infoTitle="Temp. min" infoDescription={min} iconName="thermometer" />
-        <Info infoTitle="Temp. max" infoDescription={max} iconName="thermometer" />
+        <Info
+          infoTitle="Temp. min"
+          infoDescription={min}
+          iconName="thermometer"
+        />
+        <Info
+          infoTitle="Temp. max"
+          infoDescription={max}
+          iconName="thermometer"
+        />
       </Row>
       <Row>
         <Info infoTitle="Vento" infoDescription={wind} iconName="wind" />
-        <Info infoTitle="Umidade" infoDescription={humidity} iconName="droplet" />
+        <Info
+          infoTitle="Umidade"
+          infoDescription={humidity}
+          iconName="droplet"
+        />
       </Row>
     </Container>
   );

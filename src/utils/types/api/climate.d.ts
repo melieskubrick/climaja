@@ -31,7 +31,11 @@ interface Climate {
       rain: number;
       sunrise: number;
       sunset: number;
-      temp: [Object];
+      temp: {
+        day: number;
+        min: number;
+        max: number;
+      };
       uvi: number;
       weather: [Array];
       wind_deg: number;
