@@ -16,7 +16,6 @@ export const getCurrentClimates = async (lat: string, lon: string) => {
     const response = await api.get(
       `/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${OPEN_WEATHER}`,
     );
-    console.log('lat long', lat, lon);
     return response;
   } catch (error) {
     throw new Error('Ocorreu um erro');
