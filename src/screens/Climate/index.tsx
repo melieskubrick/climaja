@@ -63,32 +63,34 @@ const Climate: React.FC = ({navigation, route}: any) => {
       ) : climate ? (
         <>
           <TemperatureCard
-            min={`${climate.main.temp_min}°C`}
-            max={`${climate.main.temp_max}°C`}
+            min={`${climate.daily[0].temp.min}°C`}
+            max={`${climate.daily[0].temp.max}°C`}
             date={format(Date.now(), 'dd, MMM yy', {locale: pt})}
-            temperature={`${climate.main.temp}°C` || 'Carregando'}
+            temperature={`${climate.current.temp}°C` || 'Carregando'}
             currentCity={city}
             currentState={state}
-            cloud={climate.weather[0].description}
-            wind={`${climate.wind.speed}` || 'Carregando'}
-            humidity={`${climate.main.humidity}%` || 'Carregando'}
+            cloud={climate.current.weather[0].description}
+            wind={`${climate.current.wind_speed}` || 'Carregando'}
+            humidity={`${climate.current.humidity}%` || 'Carregando'}
           />
-          <InformationCard
-            primaryText="Descrição"
-            secondaryText={climate.weather[0].description || 'Carregando'}
-          />
-          <InformationCard
-            primaryText="Sensação térmica"
-            secondaryText={`${climate.main.feels_like}°C` || 'Carregando'}
-          />
-          <InformationCard
-            primaryText="Velocidade do tempo"
-            secondaryText={`${climate.wind.speed}` || 'Carregando'}
-          />
-          <InformationCard
-            primaryText="Umidade"
-            secondaryText={`${climate.main.humidity}` || 'Carregando'}
-          />
+          {climate.daily ? (
+            climate.daily.map(
+              (day, index) =>
+                index > 0 && (
+                  <InformationCard
+                    key={day.dt}
+                    primaryText={
+                      format(day.dt * 1000, 'dd, MMMM, yyyy', {locale: pt}) ||
+                      'Carregando'
+                    }
+                    secondaryText={`${day.temp.day}°C` || 'Carregando'}
+                    iconName="calendar"
+                  />
+                ),
+            )
+          ) : (
+            <></>
+          )}
         </>
       ) : (
         <ActivityIndicator size="large" color="white" animating />

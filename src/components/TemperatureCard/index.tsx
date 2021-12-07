@@ -4,7 +4,7 @@ import {Container, Row, Temperature, Vw, Cloud} from './styles';
 
 import PrimaryText from '../PrimaryText';
 import SecondaryText from '../SecondaryText';
-import Info from './Info';
+import Info from '../Info';
 
 interface MainCardProps {
   date: string;

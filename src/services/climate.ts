@@ -3,9 +3,13 @@ import api from './api';
 
 export const getCurrentClimate = async (lat: string, lon: string) => {
   try {
+    // const response = await api.get(
+    //   `/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER}`,
+    // );
     const response = await api.get(
-      `/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER}`,
+      `/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${OPEN_WEATHER}`,
     );
+    console.log('melies', response.data.daily[0].temp.min)
     return response;
   } catch (error) {
     throw new Error('Ocorreu um erro');
