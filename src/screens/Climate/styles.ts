@@ -6,3 +6,5 @@ export const Container = styled.ScrollView`
   background-color: ${theme.colors.grayDark};
   padding: 8px 24px;
 `;
+
+export const NavButton = styled.TouchableOpacity``;

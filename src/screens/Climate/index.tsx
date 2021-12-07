@@ -1,11 +1,23 @@
+import React, { useLayoutEffect } from 'react';
+
+import {Container, NavButton} from './styles';
+
 import Error from '#/components/Error';
+import Feather from '#/components/Feather';
 import InformationCard from '#/components/InformationCard';
 import TemperatureCard from '#/components/TemperatureCard';
-import React from 'react';
 
-import {Container} from './styles';
+const Climate: React.FC = ({navigation}: any) => {
 
-const Climate: React.FC = () => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <NavButton onPress={() => navigation.goBack()}>
+          <Feather name="arrow-left" size={24} color='white' />
+        </NavButton>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <Container contentContainerStyle={{paddingTop: 8}}>
