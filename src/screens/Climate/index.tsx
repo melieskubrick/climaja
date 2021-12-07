@@ -1,4 +1,5 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
+import {ActivityIndicator, Alert} from 'react-native';
 
 import {Container, NavButton} from './styles';
 
@@ -6,9 +7,9 @@ import Feather from '#/components/Feather';
 import InformationCard from '#/components/InformationCard';
 import TemperatureCard from '#/components/TemperatureCard';
 import Error from '#/components/Error';
+
 import {getLocationByLatLng} from '#/services/locationApi';
 import {getCurrentClimate} from '#/services/api';
-import {ActivityIndicator, Alert} from 'react-native';
 
 import {format} from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
@@ -57,7 +58,7 @@ const Climate: React.FC = ({navigation, route}: any) => {
 
   return (
     <Container contentContainerStyle={{paddingTop: 8, paddingBottom: 16}}>
-      {lat === null || lon === null ? (
+      {!lat || !lon ? (
         <Error />
       ) : climate ? (
         <>

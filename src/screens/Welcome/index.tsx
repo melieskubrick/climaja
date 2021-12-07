@@ -1,27 +1,29 @@
+import React from 'react';
+
+import {Container, Logo, Texts} from './styles';
+
 import Button from '#/components/Button';
 import Feather from '#/components/Feather';
 import PrimaryText from '#/components/PrimaryText';
 import SecondaryText from '#/components/SecondaryText';
 import theme from '#/global/styles/theme';
-import React from 'react';
 
 import Geolocation from 'react-native-geolocation-service';
 
-import {Container, Logo, Texts} from './styles';
-
 import {hasLocationPermission} from '#/utils/helpers/location';
-import {getLocationByLatLng} from '#/services/locationApi';
 
 const Welcome: React.FC = ({navigation}: any) => {
-
   const fetchLocation = async () => {
-    const hasPermission = await hasLocationPermission();
+    await hasLocationPermission();
 
     Geolocation.getCurrentPosition(
       async position => {
         const {coords} = position;
 
-        navigation.navigate('Climate', {lat: coords.latitude, lon: coords.longitude});
+        navigation.navigate('Climate', {
+          lat: coords.latitude,
+          lon: coords.longitude,
+        });
       },
       error => {
         console.log(error);
@@ -62,4 +64,3 @@ const Welcome: React.FC = ({navigation}: any) => {
 };
 
 export default Welcome;
-
