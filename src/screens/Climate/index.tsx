@@ -1,19 +1,43 @@
-import React, { useLayoutEffect } from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 
 import {Container, NavButton} from './styles';
 
-import Error from '#/components/Error';
 import Feather from '#/components/Feather';
 import InformationCard from '#/components/InformationCard';
 import TemperatureCard from '#/components/TemperatureCard';
+import Error from '#/components/Error';
+import {getLocationByLatLng} from '#/services/locationApi';
+import {getCurrentClimate} from '#/services/api';
+import {ActivityIndicator} from 'react-native';
 
-const Climate: React.FC = ({navigation}: any) => {
+import {format} from 'date-fns';
+
+const Climate: React.FC = ({navigation, route}: any) => {
+  const {lat, lon} = route.params;
+
+  const [city, setCity] = useState<string>('');
+  const [state, setState] = useState<string>('');
+  const [climate, setClimate] = useState<Climate>();
+
+  useEffect(() => {
+    const locationLatLon = async () => {
+      const {data} = await getLocationByLatLng(lat, lon);
+      const firstLocation = data.results.shift().locations.shift();
+
+      setState(firstLocation.adminArea3);
+      setCity(firstLocation.adminArea5);
+
+      const currentClimate = await getCurrentClimate(lat, lon);
+      setClimate(currentClimate.data);
+    };
+    locationLatLon();
+  }, [lat, lon]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <NavButton onPress={() => navigation.goBack()}>
-          <Feather name="arrow-left" size={24} color='white' />
+          <Feather name="arrow-left" size={24} color="white" />
         </NavButton>
       ),
     });
@@ -21,16 +45,40 @@ const Climate: React.FC = ({navigation}: any) => {
 
   return (
     <Container contentContainerStyle={{paddingTop: 8}}>
-      <TemperatureCard
-        minMax="26°C - 32°C"
-        day="Hoje"
-        date="Sab, 3 ago"
-        temperature="30°C"
-        currentLocation="Fortaleza"
-      />
-      <InformationCard primaryText='Descrição' secondaryText='Céu limpo' />
-      <InformationCard primaryText='Sensação térmica' secondaryText='100' />
-      {/* <Error /> */}
+      {lat === null || lon === null ? (
+        <Error />
+      ) : climate ? (
+        <>
+          <TemperatureCard
+            minMax={
+              `${climate?.main.temp_min}°C - ${climate?.main.temp_max}°C` ||
+              'Carregando'
+            }
+            day="Hoje"
+            date={format(Date.now(), 'dd, MMM yy')}
+            temperature={`${climate.main.temp}°C` || 'Carregando'}
+            currentLocation={`${city}-${state}`}
+          />
+          <InformationCard
+            primaryText="Descrição"
+            secondaryText={climate.weather[0].description || 'Carregando'}
+          />
+          <InformationCard
+            primaryText="Sensação térmica"
+            secondaryText={`${climate.main.feels_like}°C` || 'Carregando'}
+          />
+          <InformationCard
+            primaryText="Velocidade do tempo"
+            secondaryText={`${climate.wind.speed}` || 'Carregando'}
+          />
+          <InformationCard
+            primaryText="Umidade"
+            secondaryText={`${climate.main.humidity}` || 'Carregando'}
+          />
+        </>
+      ) : (
+        <ActivityIndicator size="large" color="white" animating />
+      )}
     </Container>
   );
 };
