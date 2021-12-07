@@ -3,10 +3,10 @@ export default {
     grayDark: '#26282E',
     yellow: '#FFD059'
   },
-  // typography: {
-  //   light: 'Metropolis-Light',
-  //   regular: 'Metropolis-Regular',
-  //   bold: 'Metropolis-Bold',
-  //   medium: 'Metropolis-Medium',
-  // },
+  typography: {
+    light: 'Montserrat-Light',
+    regular: 'Montserrat-Regular',
+    bold: 'Montserrat-Bold',
+    medium: 'Montserrat-Medium',
+  },
 };
