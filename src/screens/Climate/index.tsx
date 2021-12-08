@@ -69,12 +69,12 @@ const Climate = ({navigation, route}: any) => {
       ) : climate && climates?.daily ? (
         <>
           <TemperatureCard
-            min={`${Math.trunc(climate.main.temp_min)}°C`}
-            max={`${Math.trunc(climate.main.temp_max)}°C`}
+            min={`${Math.trunc(climate.main.temp_min)}°C` || 'Carregando'}
+            max={`${Math.trunc(climate.main.temp_max)}°C` || 'Carregando'}
             date={format(Date.now(), 'dd, MMM yy', {locale: pt})}
             temperature={`${Math.trunc(climate.main.temp)}°C` || 'Carregando'}
-            currentCity={city}
-            currentState={state}
+            currentCity={city || 'Carregando'}
+            currentState={state || 'Carrregado'}
             cloud={climate.weather[0].description}
             wind={`${climate.wind.speed}` || 'Carregando'}
             humidity={`${climate.main.humidity}%` || 'Carregando'}
