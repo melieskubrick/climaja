@@ -24,7 +24,7 @@
 ## Abaixo segue um print da aplicação React Native
 <p align="center">
     <img src="home.png" height="600">
-    <img src="dash.png" height="600">
+    <img src="climate.png" height="600">
 </p>
 
 ## Pré-Requisitos
