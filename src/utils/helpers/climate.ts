@@ -16,6 +16,8 @@ export const getCurrentCloud = (cloud: string) => {
       return require('#/assets/images/sunny.png');
     case 'rain and drizzle':
       return require('#/assets/images/rainThunder.png');
+    case 'heavy intensity rain':
+      return require('#/assets/images/rainThunder.png');
     case 'light intensity drizzle':
       return require('#/assets/images/rainy.png');
     case 'light rain':

@@ -80,7 +80,7 @@ const Climate = ({navigation, route}: any) => {
             humidity={`${climate.main.humidity}%` || 'Carregando'}
           />
           {climates.daily.map(
-            (day, index) =>
+            (day: any, index) =>
               index > 0 && (
                 <InformationCard
                   cloud={day.weather[0].description}
@@ -92,7 +92,6 @@ const Climate = ({navigation, route}: any) => {
                   secondaryText={
                     `${Math.trunc(day.temp.day)}°C` || 'Carregando'
                   }
-                  iconName="calendar"
                 />
               ),
           )}
