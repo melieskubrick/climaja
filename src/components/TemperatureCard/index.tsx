@@ -5,6 +5,7 @@ import {Container, Row, Temperature, Vw, Cloud} from './styles';
 import PrimaryText from '../PrimaryText';
 import SecondaryText from '../SecondaryText';
 import Info from '../Info';
+import {getCurrentCloud} from '#/utils/helpers/climate';
 
 interface MainCardProps {
   date: string;
@@ -29,31 +30,6 @@ const TemperatureCard = ({
   wind,
   humidity,
 }: MainCardProps) => {
-  const currentCloud = () => {
-    switch (cloud) {
-      case 'broken clouds':
-        return require('#/assets/images/partlyCloudy.png');
-      case 'scattered clouds':
-        return require('#/assets/images/partlyCloudy.png');
-      case 'few clouds':
-        return require('#/assets/images/partlyCloudy.png');
-      case 'mist':
-        return require('#/assets/images/snowy.png');
-      case 'haze':
-        return require('#/assets/images/snowy.png');
-      case 'clear sky':
-        return require('#/assets/images/sunny.png');
-      case 'rain and drizzle':
-        return require('#/assets/images/rainThunder.png');
-      case 'light intensity drizzle':
-        return require('#/assets/images/rainy.png');
-      case 'light rain':
-        return require('#/assets/images/rainy.png');
-      default:
-        break;
-    }
-  };
-
   return (
     <Container>
       <Row>
@@ -65,7 +41,7 @@ const TemperatureCard = ({
         <Vw>
           <Temperature>{temperature}</Temperature>
         </Vw>
-        <Cloud source={currentCloud()} />
+        <Cloud source={getCurrentCloud(cloud)} />
       </Row>
       <Row>
         <Info

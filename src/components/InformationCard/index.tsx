@@ -1,24 +1,26 @@
 import React from 'react';
-import Info from '../Info';
-import PrimaryText from '../PrimaryText';
-import SecondaryText from '../SecondaryText';
+import {getCurrentCloud} from '#/utils/helpers/climate';
 
-import {Container} from './styles';
+import {Container, Cloud, InfoTitle, InfoDescription, Texts} from './styles';
 
 interface InformationCardProps {
   primaryText: string;
   secondaryText: string;
-  iconName: string
+  cloud: string;
 }
 
 const InformationCard = ({
   primaryText,
   secondaryText,
-  iconName
+  cloud,
 }: InformationCardProps) => {
   return (
     <Container>
-      <Info infoTitle={primaryText} infoDescription={secondaryText} iconName={iconName} />
+      <Cloud source={getCurrentCloud(cloud)} />
+      <Texts>
+        <InfoTitle>{primaryText}</InfoTitle>
+        <InfoDescription>{secondaryText}</InfoDescription>
+      </Texts>
     </Container>
   );
 };

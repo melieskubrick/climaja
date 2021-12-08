@@ -83,6 +83,7 @@ const Climate = ({navigation, route}: any) => {
             (day, index) =>
               index > 0 && (
                 <InformationCard
+                  cloud={day.weather[0].description}
                   key={day.dt}
                   primaryText={
                     format(day.dt * 1000, 'dd, MMMM, yyyy', {locale: pt}) ||
