@@ -14,54 +14,38 @@ import {getCurrentClimate, getCurrentClimates} from '#/services/climate';
 import {format} from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
 
-const Climate: React.FC = ({navigation, route}: any) => {
-  const {lat, lon} = route.params;
+const Climate = ({navigation, route}: any) => {
+  const {latitude, longitude} = route.params;
 
   const [city, setCity] = useState<string>('');
   const [state, setState] = useState<string>('');
   const [climate, setClimate] = useState<Climate>();
   const [climates, setClimates] = useState<Climates>();
 
-  const locationLatLonClimate = async () => {
+  const getClimates = async () => {
     setClimate(undefined);
-    if (!lat || !lon) {
-      return;
-    }
-
-    const {data} = await getLocationByLatLng(lat, lon);
-    const firstLocation = data.results.shift().locations.shift();
-
-    setState(firstLocation.adminArea3);
-    setCity(firstLocation.adminArea5);
-
-    const currentClimate = await getCurrentClimate(lat, lon);
-    setClimate(currentClimate.data);
-  };
-
-  const locationLatLonClimates = async () => {
     setClimates(undefined);
-    if (!lat || !lon) {
+
+    if (!latitude || !longitude) {
       return;
     }
 
-    const {data} = await getLocationByLatLng(lat, lon);
-    const firstLocation = data.results.shift().locations.shift();
+    const {data} = await getLocationByLatLng(latitude, longitude);
+    const location = data.results.shift().locations.shift();
 
-    setState(firstLocation.adminArea3);
-    setCity(firstLocation.adminArea5);
+    setState(location.adminArea3);
+    setCity(location.adminArea5);
 
-    const currentClimate = await getCurrentClimates(lat, lon);
-    setClimates(currentClimate.data);
-  };
+    const currentClimate = await getCurrentClimate(latitude, longitude);
+    setClimate(currentClimate.data);
 
-  const getClimates = () => {
-    locationLatLonClimate();
-    locationLatLonClimates();
+    const currentClimates = await getCurrentClimates(latitude, longitude);
+    setClimates(currentClimates.data);
   };
 
   useEffect(() => {
     getClimates();
-  }, [lat, lon]);
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -80,7 +64,7 @@ const Climate: React.FC = ({navigation, route}: any) => {
 
   return (
     <Container contentContainerStyle={{paddingTop: 8, paddingBottom: 16}}>
-      {!lat || !lon ? (
+      {!latitude || !longitude ? (
         <Error />
       ) : climate && climates?.daily ? (
         <>

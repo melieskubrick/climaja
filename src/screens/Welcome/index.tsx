@@ -21,13 +21,16 @@ const Welcome: React.FC = ({navigation}: any) => {
         const {coords} = position;
 
         navigation.navigate('Climate', {
-          lat: coords.latitude,
-          lon: coords.longitude,
+          latitude: coords.latitude,
+          longitude: coords.longitude,
         });
       },
       error => {
         console.log(error);
-        navigation.navigate('Climate', {lat: null, lon: null});
+        navigation.navigate('Climate', {
+          latitude: undefined,
+          longitude: undefined,
+        });
       },
       {
         accuracy: {
